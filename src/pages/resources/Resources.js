@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Resources.css";
 import Button from "../../components/button/Button";
 import AddResourceModal from "../../components/AddResourceModal";
+import { base_url } from "../../config";
 
 export default function ResourceOrganizer() {
   const [formData, setFormData] = useState({
@@ -17,16 +18,13 @@ export default function ResourceOrganizer() {
 
   const getResources = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:8000/api/v1/unathresources`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
+      const response = await fetch(`${base_url}/api/v1/unathresources`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        credentials: "include",
+      });
 
       const data = await response.json();
       if (data) {
@@ -42,7 +40,7 @@ export default function ResourceOrganizer() {
   async function handleSaveResource() {
     setOpenModal(false);
     try {
-      const response = await fetch(`http://localhost:8000/api/v1/resources`, {
+      const response = await fetch(`${base_url}/api/v1/resources`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

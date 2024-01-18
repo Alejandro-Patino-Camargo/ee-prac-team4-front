@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import DeckForm from "./DeckForm";
 import { Link, useParams } from "react-router-dom";
 import FlashcardForm from "./FlashcardForm";
+import { base_url } from "../../config";
 
 const DECK_DATA = {
   title: "",
@@ -22,16 +23,13 @@ function Deck() {
     if (id) {
       setDeckId(id);
       const fetchData = async (id) => {
-        const response = await fetch(
-          `http://localhost:8000/api/v1/deck/${id}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: "include",
+        const response = await fetch(`${base_url}/api/v1/deck/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
           },
-        );
+          credentials: "include",
+        });
         const deckData = await response.json();
         if (response.ok) {
           setDeckData({
@@ -56,16 +54,13 @@ function Deck() {
 
       (async (id) => {
         try {
-          const response = await fetch(
-            `http://localhost:8000/api/v1/deck/${id}`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              credentials: "include",
+          const response = await fetch(`${base_url}/api/v1/deck/${id}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
             },
-          );
+            credentials: "include",
+          });
 
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);

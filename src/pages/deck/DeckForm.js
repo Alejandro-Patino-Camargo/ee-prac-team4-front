@@ -1,4 +1,5 @@
 import React from "react";
+import { base_url } from "../../config";
 import ALL_TOPICS from "./../../constant";
 import "./Deck.css";
 
@@ -6,7 +7,7 @@ function DeckForm({ deck, setDeckData, onSaveDeck }) {
   async function handleSaveDeck(e) {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:8000/api/v1/deck`, {
+      const response = await fetch(`${base_url}/api/v1/deck`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

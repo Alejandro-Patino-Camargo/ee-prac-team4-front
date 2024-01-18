@@ -3,6 +3,7 @@ import "./About.css";
 import { Icon } from "react-icons-kit";
 import { linkedin } from "react-icons-kit/fa/linkedin";
 import { markGithub } from "react-icons-kit/oct/markGithub";
+import { base_url } from "../../config";
 
 import Olga from "./images/Olga.png";
 import Nikki from "./images/Nikki.jpeg";
@@ -401,14 +402,10 @@ const About = () => {
           </div>
         </div>
       </ul>
-      <a
-        className="button-swagger"
-        href="http://localhost:8000/api/v1/api-docs/"
-      >
+      <a className="button-swagger" href={`${base_url}/api/v1/api-docs/`}>
         Swagger documentation
       </a>
     </div>
   );
 };
 export default About;
-

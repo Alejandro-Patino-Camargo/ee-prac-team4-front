@@ -6,6 +6,7 @@ import { ic_delete_outline } from "react-icons-kit/md/ic_delete_outline";
 
 import CreateFlashcardForm from "../../components/flashcrdCreation/FlashcardCreationForm";
 import EditFlashCardForm from "../../components/flashcrdCreation/FlashCardEditForm";
+import { base_url } from "../../config";
 const FLASHCARD_FIELDS = {
   question: "",
   answer: "",
@@ -23,7 +24,7 @@ function FlashCardForm({ deckId, deck, cards, setCards }) {
   async function handleSaveCard(e) {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:8000/api/v1/flashcard`, {
+      const response = await fetch(`${base_url}/api/v1/flashcard`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -52,16 +53,13 @@ function FlashCardForm({ deckId, deck, cards, setCards }) {
 
   async function handleDelete(id) {
     try {
-      const response = await fetch(
-        `http://localhost:8000/api/v1/flashcard/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
+      const response = await fetch(`${base_url}/api/v1/flashcard/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        credentials: "include",
+      });
 
       if (response.ok) {
         let updatedCards = cards.filter((card) => card._id !== id);
@@ -76,17 +74,14 @@ function FlashCardForm({ deckId, deck, cards, setCards }) {
 
   async function handleUpdate(id, body) {
     try {
-      const response = await fetch(
-        `http://localhost:8000/api/v1/flashcard/${id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ ...body, deck: deckId }),
-          credentials: "include",
+      const response = await fetch(`${base_url}/api/v1/flashcard/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({ ...body, deck: deckId }),
+        credentials: "include",
+      });
       const updated = await response.json();
       if (response.ok) {
         let updatedCards = cards.filter((card) => card._id !== id);
