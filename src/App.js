@@ -76,9 +76,7 @@ function AuthProvider({ children }) {
           );
         }
         setDecks([...publicDecks.decks, ...privateUserDecks]);
-      } catch (error) {
-        console.error("Error fetching decks:", error);
-      }
+      } catch (error) {}
     };
     // Invoke the fetchDecks function when the component mounts or when authentication status changes
     fetchDecks();
