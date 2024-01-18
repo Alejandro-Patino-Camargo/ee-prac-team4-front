@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../App";
 import Button from "../../components/button/Button.js";
+import { base_url } from "../../config";
 import "./Register.css";
 
 const showPass = (
@@ -35,24 +36,21 @@ function Register() {
   async function handleRegistration(e) {
     e.preventDefault();
     try {
-      const response = await fetch(
-        `http://localhost:8000/api/v1/user/register`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({
-            firstName: newFirstName,
-            lastName: newLastName,
-            username: newUsername,
-            password: newPassword,
-            email: newEmail,
-            role: "Student",
-          }),
+      const response = await fetch(`${base_url}/api/v1/user/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        credentials: "include",
+        body: JSON.stringify({
+          firstName: newFirstName,
+          lastName: newLastName,
+          username: newUsername,
+          password: newPassword,
+          email: newEmail,
+          role: "Student",
+        }),
+      });
 
       const data = await response.json();
 

@@ -1,3 +1,4 @@
+import { base_url } from "./config";
 import React, { createContext, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Register from "./pages/register/Register";
@@ -30,7 +31,7 @@ function AuthProvider({ children }) {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/v1/user/logout", {
+      const response = await fetch(`${base_url}/api/v1/user/logout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -54,7 +55,7 @@ function AuthProvider({ children }) {
     const fetchDecks = async () => {
       try {
         // get public decks
-        const response = await fetch("http://localhost:8000/api/v1/decksAll", {
+        const response = await fetch(`${base_url}/api/v1/decksAll`, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
         });
@@ -63,7 +64,7 @@ function AuthProvider({ children }) {
         //get private decks if logged in
         let privateUserDecks = [];
         if (isLoggedIn) {
-          const response = await fetch("http://localhost:8000/api/v1/deck", {
+          const response = await fetch(`${base_url}/api/v1/deck`, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
@@ -89,25 +90,28 @@ function AuthProvider({ children }) {
     if (authInfo && now < authInfo.expiry) {
       const getUserData = async () => {
         try {
-          const response = await fetch(`http://localhost:8000/api/v1/user/${authInfo.userId}`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
+          const response = await fetch(
+            `${base_url}/api/v1/user/${authInfo.userId}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              credentials: "include",
             },
-            credentials: "include",
-          });
-    
+          );
+
           const userInfo = await response.json();
           if (userInfo) {
-            setIsLoggedIn(true)
-            setUserData({user: userInfo, userId: authInfo.userId})
+            setIsLoggedIn(true);
+            setUserData({ user: userInfo, userId: authInfo.userId });
           } else {
-            throw new Error("error fetching user by id")
+            throw new Error("error fetching user by id");
           }
         } catch (error) {
           console.error("Error during login:", error);
         }
-      }
+      };
       getUserData();
     } else {
       setIsLoggedIn(false);
@@ -149,7 +153,7 @@ function AppContent({ openRightNav }) {
         <Route path="/resources" element={<Resources />} />
         <Route path="/flashcards" element={<Flashcard />} />
       </Routes>
-      <Footer/>
+      <Footer />
     </>
   );
 }
